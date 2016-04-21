@@ -1,3 +1,4 @@
+% TODO: link on Treccani for each word, one letter per chapter, letters on the side
 \documentclass[
 	a4paper,
 	oneside,
@@ -11,14 +12,18 @@
 \usepackage{xcolor}
 
 \usepackage{makeidx}
+\usepackage{hyperref}
 \usepackage[
 	makeindex,
 	nonumberlist,%
 ]{glossaries}
 
 \newcommand{\etc}{\emph{etc}}
-\newcommand{\lett}{(\emph{lett.})} 
+\newcommand{\lett}{{\color{black!40!green}(\emph{lett.})}} 
 \newcommand{\switch}[1]{{\color{black!60}[\textbf{#1}]}} 
+
+% ---------------------------------------------------------
+% STYLES
 
 %\usepackage{glossary-mcols}
 %\setglossarystyle{mcolindex}
@@ -30,6 +35,9 @@
 
 \setglossarystyle{tree}
 
+%\setglossarystyle{listhypergroup}
+
+% ---------------------------------------------------------
 \makenoidxglossaries
 
 \input{listeParole/A.tex}
