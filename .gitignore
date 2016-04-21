@@ -19,3 +19,7 @@
 *.nav
 *.snm
 *.vrb
+
+*.glo
+*.glsdefs
+*.xdy
