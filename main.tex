@@ -1,17 +1,41 @@
-\documentclass[]{article}
+\documentclass[
+	a4paper,
+	oneside,
+	final
+]{article}
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+
+\usepackage{microtype}
+\usepackage{xcolor}
 
 \usepackage{makeidx}
 \usepackage[
 	makeindex,
 	nonumberlist,%
 ]{glossaries}
+
+\newcommand{\etc}{\emph{etc}}
+\newcommand{\lett}{(\emph{lett.})} 
+\newcommand{\switch}[1]{{\color{black!60}[\textbf{#1}]}} 
+
+%\usepackage{glossary-mcols}
+%\setglossarystyle{mcolindex}
+
+%\setglossarystyle{altlist}
+
+% This is ugly
+%\setglossarystyle{long4col}
+
+\setglossarystyle{tree}
+
 \makenoidxglossaries
 
 \input{listeParole/A.tex}
 \input{listeParole/C.tex}
+\input{listeParole/G.tex}
+\input{listeParole/S.tex}
 
 \begin{document}
 
