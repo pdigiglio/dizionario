@@ -1,7 +1,32 @@
 #!/bin/sh
 
+warning="`tput setaf 5`WARNING:`tput sgr0`"
+error="`tput setaf 1`ERROR:`tput sgr0`"
+
+dbPath="listeParole/"
+
+capitalize_first_letter () {
+    echo "$1" | sed 's/^./\U&/'
+}
+
+suppress_end_punctuation () {
+    echo "$1" | sed 's/[[:punct:]]$//'
+}
+
+is_duplicate () {
+    # Shows the output and the file on the screen
+    grep -n -A4 --color=auto "\newglossaryentry{$1}" */*.tex # > /dev/null
+
+    if [[ "$?" -eq "0" ]]
+    then
+        echo ""                                                         > /dev/stderr
+        echo "${error} duplicate entry. Please edit the file manually." > /dev/stderr
+        exit 1 
+    fi
+
+}
+
 record () {
-    local dbPath="listeParole/"
     local dbFile="`echo ${1:0:1} | tr '[:lower:]' '[:upper:]'`.tex" 
 
     # if one specifies an output file
@@ -14,7 +39,9 @@ record () {
     
     local wordLen=`echo -n "$1" | wc --char`
 
-    [[ !( -w ${output} ) ]] && echo "WARNING: file ${output} doesn't exist"
+    [[ !( -w ${output} ) ]] && echo "${warning} file ${output} doesn't exist"
+
+    is_duplicate $1 $dbPath $output
 
     echo " > Recording `tput setaf 3`$1`tput sgr0` ($wordLen) into " \
          "`tput setaf 2`${output}`tput sgr0`" > /dev/stderr
@@ -22,13 +49,13 @@ record () {
     # if meaning is not empty
     if [[ !( -z "$2" ) ]]
     then
-        # Capitalize first letter
-        local meaning=`echo "$2" | sed 's/^./\U&/'`
+        # Capitalize first letter and suppress end point
+        local meaning=`capitalize_first_letter "$(suppress_end_punctuation "$2")"`
         echo " > with the meaning: `tput setaf 4`$meaning`tput sgr0`"
     fi
 
     # Capitlize name field
-    local name=`echo "$1" | sed 's/^./\U&/'`
+    local name=`capitalize_first_letter "$1"`
 
     echo ""                                  >> ${output}
     echo "\\newglossaryentry{$1}{% $wordLen" >> ${output}
