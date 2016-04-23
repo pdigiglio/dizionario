@@ -26,3 +26,5 @@
 
 # Data file for histogram
 *.dat
+# Histogram plot
+*.png
