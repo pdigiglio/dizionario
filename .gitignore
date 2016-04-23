@@ -23,3 +23,6 @@
 *.glo
 *.glsdefs
 *.xdy
+
+# Data file for histogram
+*.dat
