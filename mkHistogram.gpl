@@ -1,0 +1,69 @@
+def = "histogramData"
+if ( ! exists("filename") ) {
+	print "Searching for default file ".def.".dat"
+	filename = def
+} else {
+	print "File name ".filename.".dat"
+}
+
+set font "Helvetica,12"
+
+# Eseguo un'analisi del file in input
+stats filename.".dat" using 1
+
+set grid
+set style fill pattern 4 bo
+
+# Title for data plot
+lab =  sprintf( "Data\n".\
+				"Entries:\t%G\n".\
+				"Mean:\t%G\n".\
+				"St. Dev:\t%G\n".\
+				"SDOM:\t%G\n".\
+				"[Min, Max]:\t[%G,%G]\n",\
+				STATS_records,\
+				STATS_mean,\
+				STATS_stddev,\
+				STATS_stddev / sqrt( STATS_records ),\
+				STATS_min,\
+				STATS_max)
+# Bins default
+bd = STATS_max - STATS_min
+if ( ! exists("bins") ) {
+	print "Using default number of bins: ", bd
+	bins = bd
+} else {
+	print "Using number of bins:         ", bins
+}
+
+# Calcolo la dimensione del bin
+binwidth = ( STATS_max - STATS_min ) / bins
+# Funzione per creare i bin
+bin(x, width) = width * ( floor( x / width ) - .5 / width ) + binwidth/2.0
+
+print "Using bin width:              ", binwidth
+# Fattore di normalizzazione (se volessi usare le frequenze relative)
+#Norm = STATS_records * binwidth
+Norm = 1.
+
+# Prevent empty box from creating wrong bins
+set boxwidth binwidth
+
+# Not needed as I set the xrange in the plot instruction
+#set autoscale
+# Ensures only integers on x-axis (could I use the trick below?)
+set xtics STATS_min,1,STATS_max 
+# Ensures only integers on y-axis
+set ytics 1
+# Only plot left and bottom axis
+set border 3
+
+set terminal png size 1200,900
+set output filename.".png"
+
+set title "Ignorange histogram"
+plot [ (STATS_min-1):(STATS_max+1) ] \
+     filename.".dat" using ( bin( $1, binwidth ) ):(1.0 / Norm) \
+     smooth freq with boxes title lab,\
+	 STATS_records * exp( - .5*(( x - STATS_mean )**2)/((STATS_stddev)**2) )/(sqrt(2*pi) * STATS_stddev ) \
+	 with lines notitle
