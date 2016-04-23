@@ -1,9 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-warning="`tput setaf 5`WARNING:`tput sgr0`"
-error="`tput setaf 1`ERROR:`tput sgr0`"
-
-dbPath="listeParole/"
+# Import some variables
+. commonVariables.sh
 
 capitalize_first_letter () {
     echo "$1" | sed 's/^./\U&/'
