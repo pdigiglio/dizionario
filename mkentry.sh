@@ -18,7 +18,7 @@ suppress_end_punctuation () {
 
 is_duplicate () {
     # Shows the output and the file on the screen
-    grep -n -A4 --color=auto "\newglossaryentry{$1}" */*.tex # > /dev/null
+    grep -n -A4 --color=auto "\newglossaryentry{$1}" ${dbPath}/*.tex # > /dev/null
 
     if [[ "$?" -eq "0" ]]
     then
