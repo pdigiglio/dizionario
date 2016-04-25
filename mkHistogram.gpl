@@ -1,4 +1,4 @@
-def = "histogramData"
+def = "histoData"
 if ( ! exists("filename") ) {
 	print "Searching for default file ".def.".dat"
 	filename = def
