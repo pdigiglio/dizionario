@@ -1,9 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-warning="`tput setaf 5`WARNING:`tput sgr0`"
-error="`tput setaf 1`ERROR:`tput sgr0`"
+# Import some variables
+. commonVariables.sh
 
-dbPath="listeParole/"
+help_usage () {
+	echo "Usage:"
+	echo " bash mkentry.sh \"<word>\" \"<meaning>\" (\"<out_stream>\")"
+}
 
 capitalize_first_letter () {
     echo "$1" | sed 's/^./\U&/'
@@ -28,6 +31,14 @@ is_duplicate () {
 
 record () {
     local dbFile="`echo ${1:0:1} | tr '[:lower:]' '[:upper:]'`.tex" 
+
+	# meaning is mandatory: if it's empty, exit with error
+	if [[ -z "$2" ]]
+	then
+		echo "$error word meaning is mandatory. Exiting." > /dev/stderr
+		help_usage
+		exit 2
+	fi
 
     # if one specifies an output file
     if [[ !( -z "$3" ) ]]
