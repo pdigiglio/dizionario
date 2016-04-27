@@ -3,9 +3,12 @@
 	a5paper,
 	9pt,
 	oneside,
-	final
-]{article}
-\usepackage[italian]{babel}
+	openany,
+	notitlepage,
+%	final,
+	draft
+]{scrartcl}
+\usepackage[latin,italian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
@@ -24,7 +27,10 @@
 \newcommand{\ex}[1]{\textit{#1}}
 \newcommand{\lett}{\comment{lett.}} 
 \newcommand{\stor}{\comment{stor.}} 
+\newcommand{\reg}{\comment{reg.}} 
 \newcommand{\agg}{\comment{agg.}} 
+\newcommand{\eccl}{\comment{eccl.}} 
+\newcommand{\anat}{\comment{anat.}} 
 \newcommand{\switch}[1]{{\color{black!60}[\textbf{#1}]}} 
 
 % ---------------------------------------------------------
@@ -49,10 +55,14 @@
 \input{listeParole/B.tex}
 \input{listeParole/C.tex}
 \input{listeParole/D.tex}
+\input{listeParole/E.tex}
 \input{listeParole/G.tex}
+\input{listeParole/I.tex}
+\input{listeParole/L.tex}
 \input{listeParole/M.tex}
 \input{listeParole/P.tex}
 \input{listeParole/S.tex}
+\input{listeParole/T.tex}
 \input{listeParole/V.tex}
 
 \begin{document}
