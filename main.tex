@@ -13,7 +13,7 @@
 \usepackage[T1]{fontenc}
 
 \usepackage{microtype}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 
 \usepackage{makeidx}
 \usepackage{hyperref}
@@ -22,16 +22,19 @@
 	nonumberlist,%
 ]{glossaries}
 
+%\usepackage{palatino}
+
 \newcommand{\etc}{\emph{etc}}
-\newcommand{\comment}[1]{{\color{black!40!green}(\emph{#1})}}
-\newcommand{\ex}[1]{\textit{#1}}
+\newcommand{\comment}[1]{{\color{black!40!green}(\textit{#1})}}
+\newcommand{\ex}[1]{{\color{black!80!blue}\textsl{#1}}}
 \newcommand{\lett}{\comment{lett.}} 
+\newcommand{\letter}{\comment{letter.}} 
 \newcommand{\stor}{\comment{stor.}} 
 \newcommand{\reg}{\comment{reg.}} 
 \newcommand{\agg}{\comment{agg.}} 
 \newcommand{\eccl}{\comment{eccl.}} 
 \newcommand{\anat}{\comment{anat.}} 
-\newcommand{\switch}[1]{{\color{black!60}[\textbf{#1}]}} 
+\newcommand{\switch}[1]{{\color{Maroon!60!black}[\textbf{#1}]}} 
 
 % ---------------------------------------------------------
 % STYLES
@@ -56,6 +59,7 @@
 \input{listeParole/C.tex}
 \input{listeParole/D.tex}
 \input{listeParole/E.tex}
+\input{listeParole/F.tex}
 \input{listeParole/G.tex}
 \input{listeParole/I.tex}
 \input{listeParole/L.tex}
