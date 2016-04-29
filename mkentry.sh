@@ -12,8 +12,10 @@ capitalize_first_letter () {
     echo "$1" | sed 's/^./\U&/'
 }
 
+# Suppress end punctuation and spaces
+# TODO Don't remove '}'!
 suppress_end_punctuation () {
-    echo "$1" | sed 's/[[:punct:]]$//'
+    echo "$1" | sed 's/[[:punct:]]$//' | sed 's/\s*$//'
 }
 
 is_duplicate () {
