@@ -79,12 +79,13 @@ record () {
 
     # Capitlize name field
     local name=`capitalize_first_letter "$1"`
+	local today=`date "+%G-%m-%d"`
 
-    echo ""                                  >> ${output}
-    echo "\\newglossaryentry{$1}{% $wordLen" >> ${output}
-    echo "    name        = {$name},%"       >> ${output}
-    echo "    description = {$meaning}%"     >> ${output}
-    echo "}"                                 >> ${output}
+    echo ""                                   >> ${output}
+    echo "\\newglossaryentry{$1}{% $wordLen"  >> ${output}
+    echo "    name        = {$name},% $today" >> ${output}
+    echo "    description = {$meaning}%"      >> ${output}
+    echo "}"                                  >> ${output}
 }
 
 
