@@ -35,6 +35,13 @@ has_main_db () {
 	grep -n --color=auto -i "${dbPath}$1" $mainFile
 }
 
+# Write $1 to a file and checks with hunspell
+grammar_check () {
+	echo $1 > tpm.grammar_check.txt
+	hunspell -d it_IT tmp.grammar_check.txt
+	echo $(cat tmp.grammar_check.txt) && rm tmp.grammar_check.txt
+}
+
 record () {
     local dbFile="`echo ${1:0:1} | tr '[:lower:]' '[:upper:]'`.tex" 
 
