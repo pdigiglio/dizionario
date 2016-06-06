@@ -1,0 +1,47 @@
+def = "histoDataInitials"
+if ( ! exists("filename") ) {
+	print "Searching for default file ".def.".dat"
+	filename = def
+} else {
+	print "File name ".filename.".dat"
+}
+
+set font "Helvetica,12"
+
+# Eseguo un'analisi del file in input
+stats filename.".dat" using 1
+
+set grid
+set style fill pattern 4 bo
+				
+# Bins default
+bd = 26
+binwidth = 1
+# Funzione per creare i bin
+#bin(x, width) = width * ( floor( x / width ) - .5 / width ) + binwidth/2.0
+
+print "Using bin width:              ", binwidth
+# Fattore di normalizzazione (se volessi usare le frequenze relative)
+#Norm = STATS_records * binwidth
+Norm = 1.
+
+# Prevent empty box from creating wrong bins
+set boxwidth binwidth
+
+# Not needed as I set the xrange in the plot instruction
+#set autoscale
+# Ensures only integers on x-axis (could I use the trick below?)
+set xtics 0,1,25
+# Ensures only integers on y-axis
+set ytics 1
+# Only plot left and bottom axis
+set border 3
+
+set terminal png size 1200,900
+set output filename.".png"
+
+set xtics ( "A" 0, "B" 1, "C" 2, "D" 3, "E" 4, "F" 5, "G" 6, "H" 7, "I" 8, "J" 9, \
+			"K" 10, "L" 11, "M" 12, "N" 13, "O" 14, "P" 15, "Q" 16, "R" 17, "S" 18, \
+			"T" 19, "U" 20, "V" 21, "W" 22, "X" 23, "Y" 24, "Z" 25, "" 26 )
+set title "Initials histogram"
+plot [-1:26] filename.".dat" u ($1/4) smooth freq with boxes title sprintf("Entries: %d", STATS_sum/4)
