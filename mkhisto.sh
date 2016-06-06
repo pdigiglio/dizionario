@@ -4,7 +4,9 @@
 . commonVariables.sh
 
 histoDataFile="histoData.dat"
+histoInitialsDataFile="histoDataInitials.dat"
 histoScript="mkHistogram.gpl"
+histoInitialsScript="mkHistogramInitials.gpl"
 
 extract_histo_data () {
 	# Check if output is forced
@@ -17,6 +19,13 @@ extract_histo_data () {
 
 	# Extract relevant data and override previous data file (if any)
     grep "newglossaryentry" ${dbPath}/*.tex | cut -f2 -d% | sed 's/^\ //' > $output # | sort --numeric-sort
+}
+
+extract_histo_initials () {
+	for i in $(ls -1 ${dbPath})
+	do
+		sed '/^\s*$/d' ${dbPath}$i | wc -l
+	done
 }
 
 while [[ $# -ge 1 ]]
@@ -67,7 +76,10 @@ do
 			extract_histo_data "$histoDataFile"&& gnuplot $histoScript&& xdg-open `echo $histoDataFile| sed 's/.dat/.png/'`&
 #			shift
 			;;
-			
+		--initials)
+			extract_histo_initials > $histoInitialsDataFile && gnuplot $histoInitialsScript
+			shift
+			;;
 		*)
 			extract_histo_data "$histoDataFile"
 			;;
