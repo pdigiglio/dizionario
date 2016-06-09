@@ -12,6 +12,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
+\usepackage{MnSymbol}
+
 \usepackage{microtype}
 \usepackage[dvipsnames]{xcolor}
 
@@ -23,6 +25,11 @@
 ]{glossaries}
 
 %\usepackage{palatino}
+
+% Word of the month
+%\newcommand{\wom}[2]{\marginpar{\textsc{$\largestar$ #1}}#2}
+\newcommand{\wom}[2]{\textsuperscript{\color{RoyalBlue}{[$\largestar$~#1]}}~#2}
+%\newcommand{\wom}[2]{#2\footnote{\textsc{$\largestar$ #1}}}
 
 \newcommand{\etc}{\emph{etc}}
 \newcommand{\comment}[1]{{\color{black!40!green}(\textit{#1})}}
@@ -76,6 +83,7 @@
 \input{listeParole/M.tex}
 \input{listeParole/N.tex}
 \input{listeParole/P.tex}
+\input{listeParole/Q.tex}
 \input{listeParole/R.tex}
 \input{listeParole/S.tex}
 \input{listeParole/T.tex}
