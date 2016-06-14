@@ -18,7 +18,11 @@
 \usepackage[dvipsnames]{xcolor}
 
 \usepackage{makeidx}
-\usepackage{hyperref}
+\usepackage[
+	final,
+	colorlinks=true,
+	linkcolor=Maroon,
+]{hyperref}
 \usepackage[
 	makeindex,
 	nonumberlist,%
@@ -59,12 +63,13 @@
 %\usepackage{glossary-mcols}
 %\setglossarystyle{mcolindex}
 
-%\setglossarystyle{altlist}
+%\setglossarystyle{altlistgroup}
 
 % This is ugly
 %\setglossarystyle{long4col}
 
-\setglossarystyle{tree}
+%\setglossarystyle{tree}
+\setglossarystyle{listhypergroup}
 
 %\setglossarystyle{listhypergroup}
 
