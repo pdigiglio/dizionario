@@ -1,12 +1,11 @@
 % TODO: link on Treccani for each word, one letter per chapter, letters on the side
 \documentclass[
-	a5paper,
-	9pt,
-	oneside,
-	openany,
-	notitlepage,
-%	final,
-	draft
+    paper=a5,
+    fontsize=9pt,
+    twoside=false,
+    titlepage=false,
+%   final,
+    draft
 ]{scrartcl}
 \usepackage[latin,italian]{babel}
 \usepackage[utf8]{inputenc}
@@ -19,13 +18,13 @@
 
 \usepackage{makeidx}
 \usepackage[
-	final,
-	colorlinks=true,
-	linkcolor=Maroon,
+    final,
+    colorlinks=true,
+    linkcolor=Maroon,
 ]{hyperref}
 \usepackage[
-	makeindex,
-	nonumberlist,%
+    makeindex,
+    nonumberlist,%
 ]{glossaries}
 
 %\usepackage{palatino}
@@ -100,6 +99,6 @@
 
 \begin{document}
 
-	\glsaddall
-	\printnoidxglossaries
+    \glsaddall
+    \printnoidxglossaries
 \end{document}
