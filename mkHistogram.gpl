@@ -53,8 +53,8 @@ set boxwidth binwidth
 #set autoscale
 # Ensures only integers on x-axis (could I use the trick below?)
 set xtics STATS_min,1,STATS_max 
-# Ensures only integers on y-axis
-set ytics 1
+# A ticks are multiples of 2 on y axis
+set ytics 2
 # Only plot left and bottom axis
 set border 3
 
