@@ -28,6 +28,7 @@
 ]{glossaries}
 
 %\usepackage{palatino}
+\renewcommand{\sfdefault}{iwona}
 
 % Word of the month
 %\newcommand{\wom}[2]{\marginpar{\textsc{$\largestar$ #1}}#2}
@@ -59,7 +60,9 @@
 \newcommand{\stor}{\comment{stor.}} 
 \newcommand{\switch}[1]{{\color{Maroon!60!black}\small[\textbf{#1}]}}
 
-\newcommand{\omissis}{[\textellipsis\unkern]}
+\usepackage{csquotes}
+%\newcommand{\omissis}{{\small[\textellipsis\unkern]}}
+\newcommand{\omissis}{{\small\textelp{}}}
 
 % ---------------------------------------------------------
 % STYLES
