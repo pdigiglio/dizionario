@@ -42,6 +42,8 @@ wordFolder   = $(wildcard listeParole/*.tex)
 
 MAIN=main
 $(MAIN).$(format): $(MAIN).tex AUTHORS $(wordFolder) Makefile
+	@pdflatex -$(format) $(MAIN).tex
+	@makeindex -s $(MAIN).ist -o $(MAIN).gls $(MAIN).glo
 	@echo "`tput bold`$(LaTeX)`tput sgr0`"\
 		"`tput setaf 1`$(OPTIONS)`tput sgr0`"\
 		"`tput setaf 2`$<`tput sgr0`"

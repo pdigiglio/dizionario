@@ -21,6 +21,7 @@
 *.vrb
 
 *.glo
+*.gls
 *.glsdefs
 *.xdy
 

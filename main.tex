@@ -3,7 +3,7 @@
     paper=a5,
     fontsize=9pt,
     twoside=false,
-    titlepage=false,
+    titlpage=false,
 %   final,
     draft
 ]{scrartcl}
@@ -26,7 +26,7 @@
     makeindex,
     nonumberlist,%
 ]{glossaries}
-
+ 
 %\usepackage{palatino}
 \renewcommand{\sfdefault}{iwona}
 
@@ -81,7 +81,10 @@
 %\setglossarystyle{listhypergroup}
 
 % ---------------------------------------------------------
-\makenoidxglossaries
+% Use this to use TeX to sort glossary entries (unefficient)
+%\makenoidxglossaries
+% Use this to use makeindex to sort glossary entries (more efficient)
+\makeglossaries
 
 \input{listeParole/A.tex}
 \input{listeParole/B.tex}
@@ -106,5 +109,10 @@
 \begin{document}
 
     \glsaddall
-    \printnoidxglossaries
+
+    % Use this to use TeX to sort glossary entries (unefficient)
+    %\printnoidxglossaries
+
+    % Use this to use makeindex to sort glossary entries (more efficient)
+    \printglossaries
 \end{document}
