@@ -35,6 +35,9 @@ has_main_db () {
 	grep -n --color=auto -i "${dbPath}$1" $mainFile
 }
 
+# @param $1 The word
+# @param $2 The meaning
+# @param $3 (Optional) The output stream
 record () {
     local dbFile="`echo ${1:0:1} | tr '[:lower:]' '[:upper:]'`.tex" 
 
@@ -88,7 +91,7 @@ record () {
     echo "}"                                  >> ${output}
 }
 
-typeset    cmd_line_opts="$(getopt --name "$0" --options "s:c:h" --longoptions "search:,check:,main-has-db:,has-main-db:,help" -- "$@")" ec=$?
+typeset    cmd_line_opts="$(getopt --name "$0" --options "s:c:w:m:o:h" --longoptions "word:,meaning:,output-stream:,search:,check:,main-has-db:,has-main-db:,help" -- "$@")" ec=$?
 typeset -r cmd_line_opts
 typeset -i ec
 
@@ -100,6 +103,9 @@ fi
 
 eval set -- "${cmd_line_opts}"
 # echo "$cmd_line_opts"
+
+typeset word
+typeset meaning
 
 while [[ $# -gt 0 ]]
 do
@@ -121,7 +127,7 @@ do
 
         # Check if the database corresponding to the letter has been included
         # in the main file
-        --main-has-db|--has-main-db)
+        "--main-has-db" | "--has-main-db")
             has_main_db "$2"
             exit $?
 			;;
@@ -129,41 +135,42 @@ do
         # Check if word exist in database. The idea of this option is that it
         # should not print any user-friendly message: only its error code
         # should matter.
-		-c|--check)
+		"-c" | "--check")
 			grep "$2" $dbPath/*.tex > /dev/null
 			exit $?
 			;;
 
 		# Print usage help
-		-h|--help)
+		"-h" | "--help")
 			echo "TODO: update usage!!"
 			help_usage
 			;;
 
-		# Default:
-		# @param $1 The word
-		# @param $2 The meaning
-		# @param $3 (Optional) The output stream
-		"--")
+        "-w" | "--word")
+            word="$2"
+            shift
+            ;;
 
-            # BUG The code always reaches here, if no exit is encountered!
-			record "$1" "$2" "$3"
-			shift
-			shift
-			
-			if [[ $# > 1 ]]
-			then
-				# Only the stream argument is supposed to be
-				# left on the cmd line, at this point
-				echo "Too many arguments!" > /dev/stderr
-			elif [[ $# -eq 1 ]]
-			then
-				# Shift the stream
-				shift
-			fi
+        "-m" | "--meaning")
+            meaning="$2"
+            shift
+            ;;
 
-			;;
+        "-o" | "--output-stream")
+            stream="$2"
+            shift
+            ;;
+
+        "--" )
+            break
+            ;;
 	esac
 
     shift
 done
+
+# Add word to dictionary
+if [[ -n "${word}" ]]
+then
+    record "$word" "$meaning" "$stream"
+fi
