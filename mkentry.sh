@@ -88,54 +88,65 @@ record () {
     echo "}"                                  >> ${output}
 }
 
+typeset    cmd_line_opts="$(getopt --name "$0" --options "s:c:h" --longoptions "search:,check:,main-has-db:,has-main-db:,help" -- "$@")" ec=$?
+typeset -r cmd_line_opts
+typeset -i ec
 
-while [[ $# -ge 1 ]]
+if [[ ${ec} -ne 0 ]]
+then
+    #echo "Could not parse command line options"
+    exit 1
+fi
+
+eval set -- "${cmd_line_opts}"
+# echo "$cmd_line_opts"
+
+while [[ $# -gt 0 ]]
 do
-	key="$1"
-	case $key in
+	typeset key="$1"
+	case "${key}" in
 		# Search for word in the database
-		-s|--search)
+		"-s" | "--search")
 			echo "Look for `tput setaf 3`$2`tput sgr0`" > /dev/stderr
-			grep -n --color=auto "$2" $dbPath/*.tex
-			shift
-			shift
+			grep --line-number --color=auto "$2" $dbPath/*.tex
+            ec=$?
+
+            if [[ $ec -ne 0 ]]
+            then
+                echo "No occurrence of '$2' found" > /dev/stderr
+            fi
+
+            exit $ec
 			;;
 
-		# Check if the database corresponding to the letter
-		# has been included in the main file
-		--main-has-db|--has-main-db|-db)
-			shift
-
-			if [[ (-z "$1") ]]
-			then
-				echo "$error Missing letter to search for!" > /dev/stderr
-			else
-				has_main_db "$1"
-				exit $?
-#				grep -n --color=auto -i "${dbPath}$1" main.tex
-				shift
-			fi
+        # Check if the database corresponding to the letter has been included
+        # in the main file
+        --main-has-db|--has-main-db)
+            has_main_db "$2"
+            exit $?
 			;;
 
-		# Check if word exist in database
+        # Check if word exist in database. The idea of this option is that it
+        # should not print any user-friendly message: only its error code
+        # should matter.
 		-c|--check)
-			grep -n --color=auto "$2" $dbPath/*.tex > /dev/null
+			grep "$2" $dbPath/*.tex > /dev/null
 			exit $?
-#			shift
 			;;
 
 		# Print usage help
 		-h|--help)
 			echo "TODO: update usage!!"
 			help_usage
-			shift
 			;;
 
 		# Default:
 		# @param $1 The word
 		# @param $2 The meaning
 		# @param $3 (Optional) The output stream
-		*)
+		"--")
+
+            # BUG The code always reaches here, if no exit is encountered!
 			record "$1" "$2" "$3"
 			shift
 			shift
@@ -153,4 +164,6 @@ do
 
 			;;
 	esac
+
+    shift
 done
