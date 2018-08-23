@@ -30,6 +30,10 @@ is_duplicate () {
     fi
 }
 
+function get_db_file_list {
+    find "${dbPath}" -name "*.tex" -type f
+}
+
 # Check if a database has been included in the main file
 has_main_db () {
 	grep -n --color=auto -i "${dbPath}$1" $mainFile
@@ -91,7 +95,7 @@ record () {
     echo "}"                                  >> ${output}
 }
 
-typeset    cmd_line_opts="$(getopt --name "$0" --options "s:c:w:m:o:h" --longoptions "word:,meaning:,output-stream:,search:,check:,main-has-db:,has-main-db:,help" -- "$@")" ec=$?
+typeset    cmd_line_opts="$(getopt --name "$0" --options "s:c:w:m:o:h" --longoptions "word:,meaning:,output-stream:,search:,check:,main-has-db:,has-main-db:,help,list-db-files" -- "$@")" ec=$?
 typeset -r cmd_line_opts
 typeset -i ec
 
@@ -159,6 +163,11 @@ do
         "-o" | "--output-stream")
             stream="$2"
             shift
+            ;;
+
+        "--list-db-files")
+            get_db_file_list
+            exit $?
             ;;
 
         "--" )
